@@ -1,0 +1,11 @@
+include:
+  - services/caddy/compose.yaml
+  - services/authelia/compose.yaml
+  - services/qbittorrent/compose.yaml
+  - services/filebrowser/compose.yaml
+  - services/jellyfin/compose.yaml
+
+networks:
+  proxy:
+    name: homelab_proxy
+    external: true

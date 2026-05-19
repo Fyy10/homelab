@@ -1,0 +1,4 @@
+jellyfin.{$DOMAIN} {
+  import security_headers
+  reverse_proxy jellyfin:8096
+}

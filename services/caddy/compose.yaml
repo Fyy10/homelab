@@ -1,0 +1,24 @@
+services:
+  caddy:
+    image: caddy:2.8.4
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./config/snippets:/etc/caddy/snippets:ro
+      - ./config/sites:/etc/caddy/sites:ro
+      - ${HOMELAB_DATA_DIR}/caddy/data:/data
+      - ${HOMELAB_DATA_DIR}/caddy/config:/config
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    name: homelab_proxy
+    external: true

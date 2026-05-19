@@ -1,0 +1,8 @@
+users:
+  jeff:
+    disabled: false
+    displayname: "Jeff"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$replace-with-real-password-hash"
+    email: jeff@example.com
+    groups:
+      - admins

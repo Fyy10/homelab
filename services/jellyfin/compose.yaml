@@ -1,0 +1,20 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.10.3
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ${HOMELAB_DATA_DIR}/jellyfin:/config
+      - ${MEDIA_DIR}/library:/media:ro
+      - ${MEDIA_DIR}/downloads/complete:/downloads:ro
+    expose:
+      - "8096"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    name: homelab_proxy
+    external: true

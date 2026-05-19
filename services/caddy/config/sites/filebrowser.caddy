@@ -1,0 +1,5 @@
+files.{$DOMAIN} {
+  import security_headers
+  import authelia
+  reverse_proxy filebrowser:80
+}

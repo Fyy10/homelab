@@ -1,0 +1,6 @@
+{
+  email admin@{$DOMAIN}
+}
+
+import /etc/caddy/snippets/*.caddy
+import /etc/caddy/sites/*.caddy

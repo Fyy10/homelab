@@ -1,0 +1,25 @@
+services:
+  authelia:
+    image: authelia/authelia:4.38.10
+    container_name: authelia
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /run/secrets/authelia_jwt_secret
+      AUTHELIA_SESSION_SECRET_FILE: /run/secrets/authelia_session_secret
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/authelia_storage_encryption_key
+    volumes:
+      - ./config:/config
+      - ${HOMELAB_SECRETS_DIR}/authelia/jwt_secret:/run/secrets/authelia_jwt_secret:ro
+      - ${HOMELAB_SECRETS_DIR}/authelia/session_secret:/run/secrets/authelia_session_secret:ro
+      - ${HOMELAB_SECRETS_DIR}/authelia/storage_encryption_key:/run/secrets/authelia_storage_encryption_key:ro
+      - ${HOMELAB_DATA_DIR}/authelia:/data
+    expose:
+      - "9091"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    name: homelab_proxy
+    external: true

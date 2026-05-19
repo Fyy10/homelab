@@ -1,0 +1,27 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.31.2
+    container_name: filebrowser
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    volumes:
+      - ${MEDIA_DIR}:/srv
+      - ${HOMELAB_DATA_DIR}/filebrowser:/database
+    command:
+      - "--database"
+      - "/database/filebrowser.db"
+      - "--root"
+      - "/srv"
+      - "--address"
+      - "0.0.0.0"
+      - "--port"
+      - "80"
+    expose:
+      - "80"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    name: homelab_proxy
+    external: true

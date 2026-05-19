@@ -1,0 +1,4 @@
+auth.{$DOMAIN} {
+  import security_headers
+  reverse_proxy authelia:9091
+}

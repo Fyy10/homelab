@@ -1,0 +1,26 @@
+services:
+  qbittorrent:
+    image: superng6/qbittorrentee:5.1.2.10
+    container_name: qbittorrent
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      WEBUIPORT: 8080
+      BT_PORT: ${QBITTORRENT_PORT}
+    volumes:
+      - ${HOMELAB_DATA_DIR}/qbittorrent:/config
+      - ${MEDIA_DIR}/downloads:/downloads
+    ports:
+      - "${QBITTORRENT_PORT}:${QBITTORRENT_PORT}/tcp"
+      - "${QBITTORRENT_PORT}:${QBITTORRENT_PORT}/udp"
+    expose:
+      - "8080"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    name: homelab_proxy
+    external: true
