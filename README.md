@@ -68,7 +68,7 @@ Copy `.env.example` to `.env` and edit the domain, timezone, user IDs, and paths
 5. Start the stack:
 
    ```sh
-   ./scripts/up
+   ./scripts/up.sh
    ```
 
 ## Services
