@@ -19,7 +19,7 @@ access_control:
     - domain: auth.example.com
       policy: bypass
     - domain:
-        - qb.example.com
+        - qbit.example.com
         - files.example.com
       policy: two_factor
 

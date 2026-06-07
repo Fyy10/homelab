@@ -74,7 +74,7 @@ Copy `.env.example` to `.env` and edit the domain, timezone, user IDs, and paths
 ## Services
 
 - `auth.example.com`: Authelia
-- `qb.example.com`: qBittorrent Enhanced Edition, protected by Authelia
+- `qbit.example.com`: qBittorrent Enhanced Edition, protected by Authelia
 - `files.example.com`: Filebrowser, protected by Authelia
 - `jellyfin.example.com`: Jellyfin, protected by Jellyfin's own login
 
