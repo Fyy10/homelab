@@ -1,6 +1,6 @@
 services:
   qbittorrent:
-    image: superng6/qbittorrentee:5.1.2.10
+    image: superng6/qbittorrentee:5.2.1.10
     container_name: qbittorrent
     restart: unless-stopped
     environment:
