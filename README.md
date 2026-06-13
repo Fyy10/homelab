@@ -113,6 +113,68 @@ sudo chown -R 1000:1000 /srv/media
    ./scripts/up.sh
    ```
 
+## Automated Deployment
+
+This repository includes a GitHub Actions workflow at
+`.github/workflows/deploy.yml`. It is intentionally disabled by default. The
+workflow only runs its deployment job when the repository variable
+`HOMELAB_DEPLOY_ENABLED` is set to `true`.
+
+The deployment model assumes the server keeps a persistent Git checkout and
+stores runtime state outside that checkout:
+
+```text
+/opt/homelab/app      # Git checkout of this repository
+/opt/homelab/data     # Container data
+/opt/homelab/secrets  # Secret files
+/opt/homelab/backups  # Backup output
+/srv/media            # Downloads and media library
+```
+
+Prepare the server checkout once:
+
+```sh
+sudo mkdir -p /opt/homelab
+sudo chown -R "$USER:$USER" /opt/homelab
+git clone <repository-url> /opt/homelab/app
+cd /opt/homelab/app
+cp .env.example .env
+```
+
+Edit `/opt/homelab/app/.env`, create the runtime directories described above,
+and configure Authelia secrets and users. The `.env` file and
+`services/authelia/config/users_database.yml` are intentionally ignored by Git,
+so deployments do not overwrite server-local secrets or users.
+
+Configure these GitHub repository secrets:
+
+- `HOMELAB_HOST`: server hostname or IP address
+- `HOMELAB_USER`: SSH user used for deployment
+- `HOMELAB_SSH_KEY`: private SSH key for that user
+- `HOMELAB_SSH_PORT`: optional SSH port; defaults to `22`
+
+When the server is ready, enable deployments by adding this GitHub repository
+variable:
+
+```text
+HOMELAB_DEPLOY_ENABLED=true
+```
+
+Run the workflow manually from the GitHub Actions tab. The deployment job runs:
+
+```sh
+cd /opt/homelab/app
+git fetch --prune origin
+git reset --hard origin/main
+docker compose config --quiet
+docker compose pull
+docker compose up -d --remove-orphans
+docker image prune -f
+```
+
+To deploy automatically on pushes later, add a `push` trigger to
+`.github/workflows/deploy.yml`.
+
 ## Services
 
 - `example.com`: Homepage dashboard, protected by Authelia

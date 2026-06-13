@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  DEPLOY_PATH: /opt/homelab/app
+  DEPLOY_BRANCH: main
+
+jobs:
+  deploy:
+    name: Deploy homelab stack
+    runs-on: ubuntu-latest
+    if: ${{ vars.HOMELAB_DEPLOY_ENABLED == 'true' }}
+
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOMELAB_HOST }}
+          username: ${{ secrets.HOMELAB_USER }}
+          key: ${{ secrets.HOMELAB_SSH_KEY }}
+          port: ${{ secrets.HOMELAB_SSH_PORT || 22 }}
+          script: |
+            set -eu
+
+            cd "${{ env.DEPLOY_PATH }}"
+            git fetch --prune origin
+            git reset --hard "origin/${{ env.DEPLOY_BRANCH }}"
+
+            docker compose config --quiet
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f
