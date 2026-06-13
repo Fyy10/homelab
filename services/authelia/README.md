@@ -14,7 +14,7 @@ openssl rand -hex 32 | sudo tee /opt/homelab/secrets/authelia/storage_encryption
 sudo chmod 600 /opt/homelab/secrets/authelia/*
 ```
 
-Create the real user database:
+Create the real user database config:
 
 ```sh
 cp services/authelia/config/users_database.yml.example services/authelia/config/users_database.yml
@@ -33,3 +33,5 @@ Replace the example hash in `users_database.yml`.
 Update `configuration.yml` and replace every `example.com` value with the real
 domain. The Caddy config reads the domain from `.env`, but Authelia's policy
 file is intentionally explicit so access rules are easy to audit.
+
+Please note that `session/cookies/authelia_url` cannot be the same as `session/cookies/default_redirection_url`.

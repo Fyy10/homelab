@@ -26,6 +26,12 @@ Create these directories on the server:
 ```text
 /opt/homelab/
   data/
+    authelia/
+    caddy/
+    filebrowser/
+    jellyfin/
+      cache/
+    qbittorrent/
   secrets/
   backups/
 
@@ -41,6 +47,35 @@ Create these directories on the server:
 
 Copy `.env.example` to `.env` and edit the domain, timezone, user IDs, and paths.
 
+## Service Data Directories
+
+Create service data directories before the first `docker compose up`. This
+prevents Docker from auto-creating missing bind mount source directories with a
+UID/GID that does not match the service process.
+
+For the default paths in `.env.example`:
+
+```sh
+sudo mkdir -p /opt/homelab/data/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
+sudo mkdir -p /opt/homelab/data/jellyfin/cache
+sudo mkdir -p /opt/homelab/secrets
+sudo mkdir -p /opt/homelab/backups
+sudo mkdir -p /srv/media/downloads/{incomplete,complete}
+sudo mkdir -p /srv/media/library/{movies,tv,music}
+```
+
+If `.env` uses different paths, create the same service subdirectories under
+the configured `HOMELAB_DATA_DIR`, `HOMELAB_SECRETS_DIR`, and `MEDIA_DIR`.
+
+Directories written by services that run as `${PUID}:${PGID}` must be writable
+by that user and group. With the default `PUID=1000` and `PGID=1000`:
+
+```sh
+sudo chown -R 1000:1000 /opt/homelab/data/filebrowser
+sudo chown -R 1000:1000 /opt/homelab/data/qbittorrent
+sudo chown -R 1000:1000 /srv/media
+```
+
 ## Quick Start
 
 1. Create the shared proxy network:
@@ -52,9 +87,15 @@ Copy `.env.example` to `.env` and edit the domain, timezone, user IDs, and paths
 2. Create runtime directories:
 
    ```sh
-   sudo mkdir -p /opt/homelab/{data,secrets,backups}
+   sudo mkdir -p /opt/homelab/data/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
+   sudo mkdir -p /opt/homelab/data/jellyfin/cache
+   sudo mkdir -p /opt/homelab/secrets
+   sudo mkdir -p /opt/homelab/backups
    sudo mkdir -p /srv/media/downloads/{incomplete,complete}
    sudo mkdir -p /srv/media/library/{movies,tv,music}
+   sudo chown -R 1000:1000 /opt/homelab/data/filebrowser
+   sudo chown -R 1000:1000 /opt/homelab/data/qbittorrent
+   sudo chown -R 1000:1000 /srv/media
    ```
 
 3. Copy the environment file:

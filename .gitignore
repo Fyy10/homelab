@@ -7,3 +7,5 @@
 services/authelia/config/users_database.yml
 
 .DS_Store
+
+.runtime

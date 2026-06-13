@@ -21,13 +21,13 @@ access_control:
     - domain:
         - qbit.example.com
         - files.example.com
-      policy: two_factor
+      policy: one_factor
 
 session:
   cookies:
     - domain: example.com
       authelia_url: https://auth.example.com
-      default_redirection_url: https://auth.example.com
+      default_redirection_url: https://example.com
 
 regulation:
   max_retries: 3

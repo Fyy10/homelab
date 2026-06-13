@@ -9,11 +9,12 @@ Each service gets its own directory under `services/`.
 3. Store app state in `${HOMELAB_DATA_DIR}/<service>`.
 4. Store large files in `${MEDIA_DIR}` only when they are media or downloads.
 5. Store secrets in `${HOMELAB_SECRETS_DIR}/<service>`.
-6. Add the service to the `homelab_proxy` network if it needs web access.
-7. Use `expose` for the internal web port.
-8. Do not use `ports` for web access.
-9. Add a Caddy site file in `services/caddy/config/sites/`.
-10. Add `import authelia` for internal/admin services.
+6. Document any required service data directory and ownership setup.
+7. Add the service to the `homelab_proxy` network if it needs web access.
+8. Use `expose` for the internal web port.
+9. Do not use `ports` for web access.
+10. Add a Caddy site file in `services/caddy/config/sites/`.
+11. Add `import authelia` for internal/admin services.
 
 ## Service README
 
