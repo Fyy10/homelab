@@ -1,0 +1,16 @@
+- greeting:
+    text_size: xl
+    text: Homelab
+
+- datetime:
+    text_size: md
+    format:
+      dateStyle: medium
+      timeStyle: short
+
+- resources:
+    label: Homepage Container
+    cpu: true
+    memory: true
+    uptime: true
+    refresh: 5000

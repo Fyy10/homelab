@@ -4,17 +4,21 @@ Use Caddy and Authelia for services that behave like internal web applications.
 
 ## Protected by Authelia
 
-- qBittorrent Web UI
-- Filebrowser
+- Homepage at `https://${DOMAIN}`
 
-These services should not publish host web ports.
+Protected services should not publish host web ports.
 
 ## Not Protected by Authelia
 
 - Jellyfin
+- qBittorrent Web UI
+- Filebrowser
 
 Jellyfin uses its own users and login flow. This keeps mobile, TV, and desktop
 clients working without forward-auth redirect problems.
+
+qBittorrent and Filebrowser also use their own web authentication in the current
+stack configuration.
 
 ## Default Rule
 

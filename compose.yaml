@@ -1,8 +1,7 @@
 include:
   - services/caddy/compose.yaml
-  # Authelia is kept in the repository but disabled because qBittorrent and
-  # Filebrowser use their own authentication.
-  # - services/authelia/compose.yaml
+  - services/authelia/compose.yaml
+  - services/homepage/compose.yaml
   - services/qbittorrent/compose.yaml
   - services/filebrowser/compose.yaml
   - services/jellyfin/compose.yaml

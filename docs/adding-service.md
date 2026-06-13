@@ -15,6 +15,7 @@ Each service gets its own directory under `services/`.
 9. Do not use `ports` for web access.
 10. Add a Caddy site file in `services/caddy/config/sites/`.
 11. Add `import authelia` for internal/admin services.
+12. Do not reuse the top-level `${DOMAIN}` host; it is reserved for Homepage.
 
 ## Service README
 

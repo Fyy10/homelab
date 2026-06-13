@@ -1,7 +1,7 @@
 # Filebrowser
 
 Filebrowser exposes `/srv/media` through a web UI. It is available through
-Caddy at `files.example.com` and protected by Authelia.
+Caddy at `files.${DOMAIN}` and protected by Filebrowser's own login.
 
 ## Data
 

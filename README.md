@@ -9,9 +9,9 @@ secrets, downloads, and media libraries live outside the repository.
 ## Architecture
 
 - Caddy is the only public web entry point.
-- Authelia protects internal/admin web interfaces with forward authentication.
-- qBittorrent Enhanced Edition Web UI is protected by Authelia.
-- Filebrowser is protected by Authelia.
+- Homepage is served from the top-level domain and protected by Authelia.
+- qBittorrent Enhanced Edition Web UI uses its own authentication.
+- Filebrowser uses its own authentication.
 - Jellyfin is not protected by Authelia, so mobile and TV clients can connect normally.
 - Service web ports are not published to the host.
 - qBittorrent publishes only its fixed BitTorrent listen port.
@@ -33,6 +33,7 @@ Create these directories on the server:
       cache/
     qbittorrent/
   secrets/
+    authelia/
   backups/
 
 /srv/media/
@@ -58,7 +59,7 @@ For the default paths in `.env.example`:
 ```sh
 sudo mkdir -p /opt/homelab/data/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
 sudo mkdir -p /opt/homelab/data/jellyfin/cache
-sudo mkdir -p /opt/homelab/secrets
+sudo mkdir -p /opt/homelab/secrets/authelia
 sudo mkdir -p /opt/homelab/backups
 sudo mkdir -p /srv/media/downloads/{incomplete,complete}
 sudo mkdir -p /srv/media/library/{movies,tv,music}
@@ -89,7 +90,7 @@ sudo chown -R 1000:1000 /srv/media
    ```sh
    sudo mkdir -p /opt/homelab/data/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
    sudo mkdir -p /opt/homelab/data/jellyfin/cache
-   sudo mkdir -p /opt/homelab/secrets
+   sudo mkdir -p /opt/homelab/secrets/authelia
    sudo mkdir -p /opt/homelab/backups
    sudo mkdir -p /srv/media/downloads/{incomplete,complete}
    sudo mkdir -p /srv/media/library/{movies,tv,music}
@@ -114,9 +115,11 @@ sudo chown -R 1000:1000 /srv/media
 
 ## Services
 
+- `example.com`: Homepage dashboard, protected by Authelia
 - `auth.example.com`: Authelia
-- `qbit.example.com`: qBittorrent Enhanced Edition, protected by Authelia
-- `files.example.com`: Filebrowser, protected by Authelia
+- `qbit.example.com`: qBittorrent Enhanced Edition, protected by qBittorrent's own login
+- `files.example.com`: Filebrowser, protected by Filebrowser's own login
 - `jellyfin.example.com`: Jellyfin, protected by Jellyfin's own login
 
-Replace `example.com` with your real domain in `.env` and Authelia config.
+Replace `example.com` with your real domain in `.env`. Caddy and Authelia read
+the domain from the same environment file.

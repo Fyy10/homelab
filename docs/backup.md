@@ -5,7 +5,7 @@ Back up configuration, data, and secrets with different expectations.
 ## Repository
 
 The Git repository is the backup for Compose files, Caddy config, service
-templates, scripts, and documentation.
+templates, scripts, documentation, and Homepage dashboard configuration.
 
 ## Application Data
 

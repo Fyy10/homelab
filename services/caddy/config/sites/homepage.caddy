@@ -1,0 +1,5 @@
+{$DOMAIN} {
+  import security_headers
+  import authelia
+  reverse_proxy homepage:3000
+}

@@ -1,0 +1,51 @@
+- Media:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: https://jellyfin.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Media library and streaming
+        siteMonitor: http://jellyfin:8096
+        server: local
+        container: jellyfin
+        showStats: true
+
+- Tools:
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: https://qbit.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Torrent downloads
+        siteMonitor: http://qbittorrent:8080
+        server: local
+        container: qbittorrent
+        showStats: true
+    - Filebrowser:
+        icon: filebrowser.png
+        href: https://files.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Browser-based file manager
+        siteMonitor: http://filebrowser:80
+        server: local
+        container: filebrowser
+        showStats: true
+
+- Platform:
+    - Homepage:
+        icon: homepage.png
+        href: https://{{HOMEPAGE_VAR_DOMAIN}}
+        description: Service dashboard
+        siteMonitor: http://homepage:3000
+        server: local
+        container: homepage
+        showStats: true
+    - Caddy:
+        icon: caddy.png
+        description: Reverse proxy
+        server: local
+        container: caddy
+        showStats: true
+    - Authelia:
+        icon: authelia.png
+        href: https://auth.{{HOMEPAGE_VAR_DOMAIN}}
+        description: Forward authentication
+        siteMonitor: http://authelia:9091/api/health
+        server: local
+        container: authelia
+        showStats: true

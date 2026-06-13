@@ -1,5 +1,4 @@
-# Authelia is kept in the repository but disabled.
-# auth.{$DOMAIN} {
-#   import security_headers
-#   reverse_proxy authelia:9091
-# }
+auth.{$DOMAIN} {
+  import security_headers
+  reverse_proxy authelia:9091
+}

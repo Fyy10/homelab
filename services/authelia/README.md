@@ -30,8 +30,14 @@ Replace the example hash in `users_database.yml`.
 
 ## Domain Configuration
 
-Update `configuration.yml` and replace every `example.com` value with the real
-domain. The Caddy config reads the domain from `.env`, but Authelia's policy
-file is intentionally explicit so access rules are easy to audit.
+Set `DOMAIN` in `.env`. Authelia renders `configuration.yml` with its template
+filter, so the access rules and session cookie domain stay in sync with Caddy.
 
 Please note that `session/cookies/authelia_url` cannot be the same as `session/cookies/default_redirection_url`.
+
+## Protected Routes
+
+- `https://${DOMAIN}`: Homepage
+
+Authelia itself is available at `https://auth.${DOMAIN}` and is configured with
+a bypass policy so login redirects work.

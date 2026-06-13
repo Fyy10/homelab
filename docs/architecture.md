@@ -22,9 +22,12 @@ the Docker network and are not published to the host.
 
 ## Access Control
 
-Authelia protects admin and internal web services with forward authentication.
+Authelia protects Homepage at the top-level domain with forward authentication.
+Homepage is the service dashboard for links and Docker container status.
+
 Jellyfin is not protected by Authelia because native media clients need direct
-access to Jellyfin's own login flow.
+access to Jellyfin's own login flow. qBittorrent and Filebrowser use their own
+web login flows.
 
 ## Data Boundaries
 
@@ -34,3 +37,6 @@ repository:
 - `/opt/homelab/data`: application state
 - `/opt/homelab/secrets`: secrets
 - `/srv/media`: downloads and media libraries
+
+Homepage configuration is stored in the repository under
+`services/homepage/config`; it does not have a separate runtime data directory.

@@ -1,6 +1,6 @@
 # Jellyfin
 
-Jellyfin is available through Caddy at `jellyfin.example.com`.
+Jellyfin is available through Caddy at `jellyfin.${DOMAIN}`.
 
 It is not protected by Authelia because many mobile, TV, and media clients do
 not handle forward-auth redirects well. Use Jellyfin's own user accounts,

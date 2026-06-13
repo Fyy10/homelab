@@ -7,7 +7,7 @@ log:
   level: info
 
 totp:
-  issuer: example.com
+  issuer: '{{ env "DOMAIN" }}'
 
 authentication_backend:
   file:
@@ -16,18 +16,16 @@ authentication_backend:
 access_control:
   default_policy: deny
   rules:
-    - domain: auth.example.com
+    - domain: 'auth.{{ env "DOMAIN" }}'
       policy: bypass
-    - domain:
-        - qbit.example.com
-        - files.example.com
+    - domain: '{{ env "DOMAIN" }}'
       policy: one_factor
 
 session:
   cookies:
-    - domain: example.com
-      authelia_url: https://auth.example.com
-      default_redirection_url: https://example.com
+    - domain: '{{ env "DOMAIN" }}'
+      authelia_url: 'https://auth.{{ env "DOMAIN" }}'
+      default_redirection_url: 'https://{{ env "DOMAIN" }}'
 
 regulation:
   max_retries: 3
