@@ -8,6 +8,8 @@ services:
       - ${MEDIA_DIR}:/srv
       - ${HOMELAB_DATA_DIR}/filebrowser:/database
       - ${HOMELAB_DATA_DIR}/filebrowser/config:/config
+    environment:
+      - FB_NOAUTH=true
     command:
       - "--database"
       - "/database/filebrowser.db"
