@@ -7,6 +7,7 @@ services:
     volumes:
       - ${MEDIA_DIR}:/srv
       - ${HOMELAB_DATA_DIR}/filebrowser:/database
+      - ${HOMELAB_DATA_DIR}/filebrowser/config:/config
     command:
       - "--database"
       - "/database/filebrowser.db"

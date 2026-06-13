@@ -1,6 +1,5 @@
 files.{$DOMAIN} {
   import security_headers
-  # Authelia is disabled; Filebrowser uses its own authentication.
-  # import authelia
+  import authelia
   reverse_proxy filebrowser:80
 }

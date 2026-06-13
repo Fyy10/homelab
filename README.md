@@ -10,8 +10,8 @@ secrets, downloads, and media libraries live outside the repository.
 
 - Caddy is the only public web entry point.
 - Homepage is served from the top-level domain and protected by Authelia.
-- qBittorrent Enhanced Edition Web UI uses its own authentication.
-- Filebrowser uses its own authentication.
+- qBittorrent Enhanced Edition Web UI is protected by Authelia.
+- Filebrowser is protected by Authelia.
 - Jellyfin is not protected by Authelia, so mobile and TV clients can connect normally.
 - Service web ports are not published to the host.
 - qBittorrent publishes only its fixed BitTorrent listen port.
@@ -21,22 +21,25 @@ See [docs/architecture.md](docs/architecture.md) for the full layout.
 
 ## Runtime Layout
 
-Create these directories on the server:
+Configure these paths in `.env`, then create the matching directories on the
+server:
 
 ```text
-/opt/homelab/
-  data/
+${HOMELAB_DATA_DIR}/
     authelia/
     caddy/
+      config/
+      data/
     filebrowser/
+      config/
     jellyfin/
       cache/
     qbittorrent/
-  secrets/
+${HOMELAB_SECRETS_DIR}/
     authelia/
-  backups/
+$(dirname "$HOMELAB_DATA_DIR")/backups/
 
-/srv/media/
+${MEDIA_DIR}/
   downloads/
     incomplete/
     complete/
@@ -54,27 +57,34 @@ Create service data directories before the first `docker compose up`. This
 prevents Docker from auto-creating missing bind mount source directories with a
 UID/GID that does not match the service process.
 
-For the default paths in `.env.example`:
+After copying and editing `.env`, run:
 
 ```sh
-sudo mkdir -p /opt/homelab/data/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
-sudo mkdir -p /opt/homelab/data/jellyfin/cache
-sudo mkdir -p /opt/homelab/secrets/authelia
-sudo mkdir -p /opt/homelab/backups
-sudo mkdir -p /srv/media/downloads/{incomplete,complete}
-sudo mkdir -p /srv/media/library/{movies,tv,music}
+set -a
+. ./.env
+set +a
+
+sudo mkdir -p "$HOMELAB_DATA_DIR"/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
+sudo mkdir -p "$HOMELAB_DATA_DIR"/caddy/{config,data}
+sudo mkdir -p "$HOMELAB_DATA_DIR"/jellyfin/cache
+sudo mkdir -p "$HOMELAB_DATA_DIR"/filebrowser/config
+sudo mkdir -p "$HOMELAB_SECRETS_DIR"/authelia
+sudo mkdir -p "$(dirname "$HOMELAB_DATA_DIR")"/backups
+sudo mkdir -p "$MEDIA_DIR"/downloads/{incomplete,complete}
+sudo mkdir -p "$MEDIA_DIR"/library/{movies,tv,music}
 ```
 
-If `.env` uses different paths, create the same service subdirectories under
-the configured `HOMELAB_DATA_DIR`, `HOMELAB_SECRETS_DIR`, and `MEDIA_DIR`.
-
 Directories written by services that run as `${PUID}:${PGID}` must be writable
-by that user and group. With the default `PUID=1000` and `PGID=1000`:
+by that user and group:
 
 ```sh
-sudo chown -R 1000:1000 /opt/homelab/data/filebrowser
-sudo chown -R 1000:1000 /opt/homelab/data/qbittorrent
-sudo chown -R 1000:1000 /srv/media
+set -a
+. ./.env
+set +a
+
+sudo chown -R "$PUID:$PGID" "$HOMELAB_DATA_DIR"/filebrowser
+sudo chown -R "$PUID:$PGID" "$HOMELAB_DATA_DIR"/qbittorrent
+sudo chown -R "$PUID:$PGID" "$MEDIA_DIR"
 ```
 
 ## Quick Start
@@ -85,24 +95,30 @@ sudo chown -R 1000:1000 /srv/media
    docker network create homelab_proxy
    ```
 
-2. Create runtime directories:
-
-   ```sh
-   sudo mkdir -p /opt/homelab/data/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
-   sudo mkdir -p /opt/homelab/data/jellyfin/cache
-   sudo mkdir -p /opt/homelab/secrets/authelia
-   sudo mkdir -p /opt/homelab/backups
-   sudo mkdir -p /srv/media/downloads/{incomplete,complete}
-   sudo mkdir -p /srv/media/library/{movies,tv,music}
-   sudo chown -R 1000:1000 /opt/homelab/data/filebrowser
-   sudo chown -R 1000:1000 /opt/homelab/data/qbittorrent
-   sudo chown -R 1000:1000 /srv/media
-   ```
-
-3. Copy the environment file:
+2. Copy and edit the environment file:
 
    ```sh
    cp .env.example .env
+   ```
+
+3. Create runtime directories:
+
+   ```sh
+   set -a
+   . ./.env
+   set +a
+
+   sudo mkdir -p "$HOMELAB_DATA_DIR"/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
+   sudo mkdir -p "$HOMELAB_DATA_DIR"/caddy/{config,data}
+   sudo mkdir -p "$HOMELAB_DATA_DIR"/jellyfin/cache
+   sudo mkdir -p "$HOMELAB_DATA_DIR"/filebrowser/config
+   sudo mkdir -p "$HOMELAB_SECRETS_DIR"/authelia
+   sudo mkdir -p "$(dirname "$HOMELAB_DATA_DIR")"/backups
+   sudo mkdir -p "$MEDIA_DIR"/downloads/{incomplete,complete}
+   sudo mkdir -p "$MEDIA_DIR"/library/{movies,tv,music}
+   sudo chown -R "$PUID:$PGID" "$HOMELAB_DATA_DIR"/filebrowser
+   sudo chown -R "$PUID:$PGID" "$HOMELAB_DATA_DIR"/qbittorrent
+   sudo chown -R "$PUID:$PGID" "$MEDIA_DIR"
    ```
 
 4. Configure Authelia secrets and users. See [services/authelia/README.md](services/authelia/README.md).
@@ -179,8 +195,8 @@ To deploy automatically on pushes later, add a `push` trigger to
 
 - `example.com`: Homepage dashboard, protected by Authelia
 - `auth.example.com`: Authelia
-- `qbit.example.com`: qBittorrent Enhanced Edition, protected by qBittorrent's own login
-- `files.example.com`: Filebrowser, protected by Filebrowser's own login
+- `qbit.example.com`: qBittorrent Enhanced Edition, protected by Authelia
+- `files.example.com`: Filebrowser, protected by Authelia
 - `jellyfin.example.com`: Jellyfin, protected by Jellyfin's own login
 
 Replace `example.com` with your real domain in `.env`. Caddy and Authelia read

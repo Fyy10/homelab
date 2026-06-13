@@ -18,7 +18,10 @@ access_control:
   rules:
     - domain: 'auth.{{ env "DOMAIN" }}'
       policy: bypass
-    - domain: '{{ env "DOMAIN" }}'
+    - domain:
+        - '{{ env "DOMAIN" }}'
+        - 'qbit.{{ env "DOMAIN" }}'
+        - 'files.{{ env "DOMAIN" }}'
       policy: one_factor
 
 session:

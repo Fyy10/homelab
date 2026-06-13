@@ -1,6 +1,5 @@
 qbit.{$DOMAIN} {
   import security_headers
-  # Authelia is disabled; qBittorrent uses its own authentication.
-  # import authelia
+  import authelia
   reverse_proxy qbittorrent:8080
 }

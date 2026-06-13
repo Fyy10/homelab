@@ -7,11 +7,15 @@ Authelia provides forward authentication for internal web services.
 Create secret files on the server:
 
 ```sh
-sudo mkdir -p /opt/homelab/secrets/authelia
-openssl rand -hex 32 | sudo tee /opt/homelab/secrets/authelia/jwt_secret
-openssl rand -hex 32 | sudo tee /opt/homelab/secrets/authelia/session_secret
-openssl rand -hex 32 | sudo tee /opt/homelab/secrets/authelia/storage_encryption_key
-sudo chmod 600 /opt/homelab/secrets/authelia/*
+set -a
+. ./.env
+set +a
+
+sudo mkdir -p "$HOMELAB_SECRETS_DIR"/authelia
+openssl rand -hex 32 | sudo tee "$HOMELAB_SECRETS_DIR"/authelia/jwt_secret
+openssl rand -hex 32 | sudo tee "$HOMELAB_SECRETS_DIR"/authelia/session_secret
+openssl rand -hex 32 | sudo tee "$HOMELAB_SECRETS_DIR"/authelia/storage_encryption_key
+sudo chmod 600 "$HOMELAB_SECRETS_DIR"/authelia/*
 ```
 
 Create the real user database config:
@@ -23,7 +27,7 @@ cp services/authelia/config/users_database.yml.example services/authelia/config/
 Generate a password hash:
 
 ```sh
-docker run --rm authelia/authelia:4.38.10 authelia crypto hash generate argon2 --password 'change-me'
+docker run --rm authelia/authelia:4.39.20 authelia crypto hash generate argon2 --password 'change-me'
 ```
 
 Replace the example hash in `users_database.yml`.

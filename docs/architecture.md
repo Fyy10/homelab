@@ -22,12 +22,12 @@ the Docker network and are not published to the host.
 
 ## Access Control
 
-Authelia protects Homepage at the top-level domain with forward authentication.
-Homepage is the service dashboard for links and Docker container status.
+Authelia protects Homepage, qBittorrent Web UI, and Filebrowser with forward
+authentication. Homepage is the service dashboard for links and Docker
+container status.
 
 Jellyfin is not protected by Authelia because native media clients need direct
-access to Jellyfin's own login flow. qBittorrent and Filebrowser use their own
-web login flows.
+access to Jellyfin's own login flow.
 
 ## Data Boundaries
 
