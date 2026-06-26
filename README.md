@@ -201,3 +201,18 @@ To deploy automatically on pushes later, add a `push` trigger to
 
 Replace `example.com` with your real domain in `.env`. Caddy and Authelia read
 the domain from the same environment file.
+
+## TODO
+
+Service structure:
+
+- [x] Caddy
+- [x] Authelia
+- [x] Homepage
+- [x] qBittorrent
+- [x] Filebrowser
+- [x] Jellyfin
+- [ ] Prowlarr
+- [ ] Radarr
+- [ ] Sonarr
+- [ ] Bazarr
