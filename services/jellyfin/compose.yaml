@@ -10,6 +10,7 @@ services:
       - ${HOMELAB_DATA_DIR}/jellyfin/cache:/cache
       - ${MEDIA_DIR}/library:/media:ro
       - ${MEDIA_DIR}/downloads/complete:/downloads:ro
+      - ./fonts:/fonts:ro
     expose:
       - "8096"
     networks:
