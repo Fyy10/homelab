@@ -11,7 +11,7 @@ services:
       BT_PORT: ${QBITTORRENT_PORT}
     volumes:
       - ${HOMELAB_DATA_DIR}/qbittorrent:/config
-      - ${MEDIA_DIR}/downloads:/downloads
+      - ${MEDIA_DIR}:/srv/data
     ports:
       - "${QBITTORRENT_PORT}:${QBITTORRENT_PORT}/tcp"
       - "${QBITTORRENT_PORT}:${QBITTORRENT_PORT}/udp"

@@ -24,5 +24,5 @@ The BitTorrent listen port is exposed directly so peers can connect:
 
 Set qBittorrent's incomplete and completed download folders to:
 
-- `/downloads/incomplete`
-- `/downloads/complete`
+- `/srv/data/downloads/incomplete`
+- `/srv/data/downloads/complete`
