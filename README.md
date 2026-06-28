@@ -34,6 +34,8 @@ ${HOMELAB_DATA_DIR}/
       config/
     jellyfin/
       cache/
+      plugin-servers/
+        metatube/
     qbittorrent/
 ${HOMELAB_SECRETS_DIR}/
     authelia/
@@ -67,6 +69,7 @@ set +a
 sudo mkdir -p "$HOMELAB_DATA_DIR"/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
 sudo mkdir -p "$HOMELAB_DATA_DIR"/caddy/{config,data}
 sudo mkdir -p "$HOMELAB_DATA_DIR"/jellyfin/cache
+sudo mkdir -p "$HOMELAB_DATA_DIR"/jellyfin/plugin-servers/metatube
 sudo mkdir -p "$HOMELAB_DATA_DIR"/filebrowser/config
 sudo mkdir -p "$HOMELAB_SECRETS_DIR"/authelia
 sudo mkdir -p "$(dirname "$HOMELAB_DATA_DIR")"/backups
@@ -111,6 +114,7 @@ sudo chown -R "$PUID:$PGID" "$MEDIA_DIR"
    sudo mkdir -p "$HOMELAB_DATA_DIR"/{authelia,caddy,filebrowser,jellyfin,qbittorrent}
    sudo mkdir -p "$HOMELAB_DATA_DIR"/caddy/{config,data}
    sudo mkdir -p "$HOMELAB_DATA_DIR"/jellyfin/cache
+   sudo mkdir -p "$HOMELAB_DATA_DIR"/jellyfin/plugin-servers/metatube
    sudo mkdir -p "$HOMELAB_DATA_DIR"/filebrowser/config
    sudo mkdir -p "$HOMELAB_SECRETS_DIR"/authelia
    sudo mkdir -p "$(dirname "$HOMELAB_DATA_DIR")"/backups

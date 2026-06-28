@@ -16,6 +16,18 @@ services:
     networks:
       - proxy
 
+  metatube:
+    image: ghcr.io/metatube-community/metatube-server:1.4.0
+    container_name: metatube
+    expose:
+      - "8080"
+    restart: unless-stopped
+    volumes:
+      - ${HOMELAB_DATA_DIR}/jellyfin/plugin-servers/metatube:/data
+    command: -dsn "/data/metatube.db" -port 8080 -db-auto-migrate -db-prepared-stmt
+    networks:
+      - proxy
+
 networks:
   proxy:
     name: homelab_proxy
